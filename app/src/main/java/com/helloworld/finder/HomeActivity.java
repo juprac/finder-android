@@ -5,6 +5,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import adapter.DemoAdapter;
+import models.Demo;
+
 public class HomeActivity extends BaseActivity {
 
     @Override
@@ -12,13 +21,21 @@ public class HomeActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        Button btMap = findViewById(R.id.btMap);
-        btMap.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(HomeActivity.this, MapsActivity.class);
-                startActivity(intent);
-            }
-        });
+        List<Demo> demoList = new ArrayList<>();
+
+        demoList.add(new Demo("Basic Map", MapsActivity.class));
+
+        DemoAdapter adapter = new DemoAdapter(demoList, this);
+
+        RecyclerView rvDemos = findViewById(R.id.rvDemos);
+
+        rvDemos.setAdapter(adapter);
+
+        rvDemos.setHasFixedSize(true);
+
+        RecyclerView.LayoutManager manager = new LinearLayoutManager(this);
+
+        rvDemos.setLayoutManager(manager);
+
     }
 }
