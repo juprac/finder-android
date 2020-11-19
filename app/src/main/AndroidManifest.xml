@@ -40,6 +40,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".PartialMapsActivity" />
+        <activity android:name=".UIMapsActivity" />
+        <activity android:name=".LocationsMapsActivity" />
     </application>
 
 </manifest>
