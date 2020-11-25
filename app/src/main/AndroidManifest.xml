@@ -43,6 +43,7 @@
         <activity android:name=".UIMapsActivity" />
         <activity android:name=".LocationsMapsActivity" />
         <activity android:name=".MapsGeoActivity" />
+        <activity android:name=".MapsPolylineActivity" />
     </application>
 
 </manifest>
