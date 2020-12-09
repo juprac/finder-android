@@ -16,6 +16,7 @@ import com.google.maps.android.PolyUtil;
 import java.util.List;
 
 import models.Direction;
+import models.Leg;
 import models.Polyline;
 import models.Step;
 import retrofit2.Call;
@@ -83,24 +84,21 @@ public class MapsInputPolylineActivity extends BaseActivity implements OnMapRead
         call.enqueue(new Callback<Direction>() {
            @Override
             public void onResponse(Call<Direction> call, Response<Direction> response) {
-               boolean setMarkerFirstTime = false;
+               List<Leg> leg = response.body().getRoutes().get(0).getLegs();
 
-                for(Step step : response.body().getRoutes().get(0).getLegs().get(0).getSteps()){
+               LatLng startLocation = new LatLng(leg.get(0).getStartLocation().getLat(), leg.get(0).getStartLocation().getLng());
+               LatLng endLocation = new LatLng(leg.get(0).getEndLocation().getLat(), leg.get(0).getEndLocation().getLng());
+
+               mMap.addMarker(new MarkerOptions().position(startLocation).title(leg.get(0).getStartAddress()));
+               mMap.moveCamera(CameraUpdateFactory.newLatLng(startLocation));
+               mMap.addMarker(new MarkerOptions().position(endLocation).title(leg.get(0).getEndAddress()));
+
+                for(Step step : leg.get(0).getSteps()){
                    Polyline polyline = step.getPolyline();
 
                     List<LatLng> points = PolyUtil.decode(polyline.getPoints());
 
                     mMap.addPolyline(new PolylineOptions().addAll(points).width(5).color(Color.BLUE));
-
-                    if(!setMarkerFirstTime){
-                        mMap.addMarker(new MarkerOptions().position(points.get(0)));
-                        mMap.moveCamera(CameraUpdateFactory.newLatLng(points.get(0)));
-
-
-                        setMarkerFirstTime = true;
-                    }
-
-
                }
 
             }
