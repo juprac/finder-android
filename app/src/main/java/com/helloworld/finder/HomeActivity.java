@@ -30,6 +30,7 @@ public class HomeActivity extends BaseActivity {
         demoList.add(new Demo("Location Map", LocationsMapsActivity.class));
         demoList.add(new Demo("Simple Polyline Map", MapsPolylineActivity.class));
         demoList.add(new Demo("Map Set Direction", MapsSetDirections.class));
+        demoList.add(new Demo("Set Location Map", SetLocationMapActivity.class));
 
 
         DemoAdapter adapter = new DemoAdapter(demoList, this);
